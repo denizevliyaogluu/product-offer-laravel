@@ -38,6 +38,39 @@ class ProductController extends Controller
         $product->status = 1;
         $product->save();
 
-    return redirect()->route('products.index')->with('success', 'Ürün başarıyla oluşturuldu.');
+    return redirect()->route('products.index')->with('success', 'The product was created successfully.');
     }
+
+    public function update($id){
+        $product = Products::findOrFail($id);
+        $categories = ProductCategories::all();
+        return view('products.update', compact('product', 'categories'));
+    }
+
+    public function updatePost(Request $request, $id){
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required|numeric',
+            'category_id' => 'required|exists:product_categories,id',
+        ]);
+
+        $product = Products::findOrFail($id);
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->category_id = $request->category_id;
+        $product->save();
+
+        return redirect()->route('products.index')->with('success', 'The product has been updated successfully.');
+    }
+
+    public function delete($id)
+    {
+        $product = Products::findOrFail($id);
+        $product->delete();
+
+        return redirect()->route('products.index')->with('success', 'The product has been deleted successfully.');
+    }
+
 }

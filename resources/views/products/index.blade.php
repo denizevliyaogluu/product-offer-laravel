@@ -36,8 +36,8 @@
                     <td>{{ $product->price }}</td>
 
                     <td>
-                        <a href="#" class="btn btn-primary btn-sm">Düzenle</a>
-                        <a href="#" class="btn btn-danger btn-sm">Sil</a>
+                        <a href="{{ route('products.update', ['id' => $product->id]) }}" class="btn btn-primary btn-sm">Düzenle</a>
+                        <a href="{{ route('products.delete', $product->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Bu ürünü silmek istediğinizden emin misiniz?')">Sil</a>
                     </td>
                 </tr>
             @endforeach
