@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -28,3 +29,9 @@ Route::post('/register', [AuthController::class, 'store'])->name('auth.store');
 
 //Logout
 Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+
+Route::middleware(['auth'])->prefix('products')->group(function () {
+    Route::get('/', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/create', [ProductController::class, 'create'])->name('products.create');
+    Route::post('/create', [ProductController::class, 'createPost'])->name('products.create.post');
+});
