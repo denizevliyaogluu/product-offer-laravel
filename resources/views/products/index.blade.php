@@ -11,6 +11,10 @@
 <div class="container mt-5">
     <h2 class="mb-4">Ürün Listesi</h2>
 
+    <div class="mb-3">
+        <a href="{{ route('products.create') }}" class="btn btn-success">Ürün Ekle</a>
+    </div>
+
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -24,6 +28,7 @@
                 <th>Ürün Adı</th>
                 <th>Açıklama</th>
                 <th>Fiyat</th>
+                <th>Kategori</th>
                 <th>İşlemler</th>
             </tr>
         </thead>
@@ -34,7 +39,13 @@
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->description }}</td>
                     <td>{{ $product->price }}</td>
-
+                    <td>
+                        @if($product->getCategory)
+                            {{ $product->getCategory->name }}
+                        @else
+                            Kategori Yok
+                        @endif
+                    </td>
                     <td>
                         <a href="{{ route('products.update', ['id' => $product->id]) }}" class="btn btn-primary btn-sm">Düzenle</a>
                         <a href="{{ route('products.delete', $product->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Bu ürünü silmek istediğinizden emin misiniz?')">Sil</a>
