@@ -14,6 +14,9 @@
     <div class="mb-3">
         <a href="{{ route('products.create') }}" class="btn btn-success">Ürün Ekle</a>
     </div>
+    <div class="mb-3">
+        <a href="{{ route('orders.index') }}" class="btn btn-primary">Sepete Git</a>
+    </div>
 
     @if(session('success'))
         <div class="alert alert-success">
@@ -47,9 +50,18 @@
                         @endif
                     </td>
                     <td>
-                        <a href="{{ route('products.update', ['id' => $product->id]) }}" class="btn btn-primary btn-sm">Düzenle</a>
-                        <a href="{{ route('products.delete', $product->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Bu ürünü silmek istediğinizden emin misiniz?')">Sil</a>
+                        @if(Auth::check() && $product->user_id == Auth::id())
+                            <a href="{{ route('products.update', ['id' => $product->id]) }}" class="btn btn-primary btn-sm">Düzenle</a>
+                            <a href="{{ route('products.delete', $product->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Bu ürünü silmek istediğinizden emin misiniz?')">Sil</a>
+                            @else
+                            <form action="{{ route('orders.create') }}" method="post">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <button type="submit" class="btn btn-success btn-sm">Sepete Ekle</button>
+                            </form>
+                        @endif
                     </td>
+
                 </tr>
             @endforeach
         </tbody>

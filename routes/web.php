@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,7 @@ Route::post('/register', [AuthController::class, 'store'])->name('auth.store');
 //Logout
 Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
+//products
 Route::middleware(['auth'])->prefix('products')->group(function () {
     Route::get('/', [ProductController::class, 'index'])->name('products.index');
     Route::get('/create', [ProductController::class, 'create'])->name('products.create');
@@ -38,3 +40,8 @@ Route::middleware(['auth'])->prefix('products')->group(function () {
     Route::post('/update/{id}', [ProductController::class, 'updatePost'])->name('products.update.post');
     Route::get('/delete/{id}', [ProductController::class, 'delete'])->name('products.delete');
 });
+
+//orders
+Route::get('/orders/index', [OrderController::class,'index'])->name('orders.index');
+Route::post('/orders/create', [OrderController::class, 'create'])->name('orders.create');
+Route::get('/confirm-cart', [OrderController::class, 'confirmCart'])->name('orders.confirmCart');
