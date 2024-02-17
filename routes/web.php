@@ -32,7 +32,7 @@ Route::post('/register', [AuthController::class, 'store'])->name('auth.store');
 Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 //products
-Route::middleware(['auth'])->prefix('products')->group(function () {
+Route::prefix('products')->group(function () {
     Route::get('/', [ProductController::class, 'index'])->name('products.index');
     Route::get('/create', [ProductController::class, 'create'])->name('products.create');
     Route::post('/create', [ProductController::class, 'createPost'])->name('products.create.post');
@@ -42,6 +42,8 @@ Route::middleware(['auth'])->prefix('products')->group(function () {
 });
 
 //orders
-Route::get('/orders/index', [OrderController::class,'index'])->name('orders.index');
-Route::post('/orders/create', [OrderController::class, 'create'])->name('orders.create');
-Route::get('/confirm-cart', [OrderController::class, 'confirmCart'])->name('orders.confirmCart');
+Route::prefix('orders')->group(function (){
+    Route::get('/index', [OrderController::class,'index'])->name('orders.index');
+    Route::post('/create', [OrderController::class, 'create'])->name('orders.create');
+    Route::get('/confirm-cart', [OrderController::class, 'confirmCart'])->name('orders.confirmCart');
+});

@@ -30,7 +30,7 @@
         </div>
     @endif
 
-    <form method="post" action="{{ route('products.create.post') }}">
+    <form method="post" action="{{ route('products.create.post') }}" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="name">Ürün Adı:</label>
@@ -51,6 +51,10 @@
                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                 @endforeach
             </select>
+        </div>
+        <div class="form-group">
+            <label for="image">Fotoğraf:</label>
+            <input type="file" class="form-control-file" id="image" name="image" required>
         </div>
         <button type="submit" class="btn btn-primary">Ürün Oluştur</button>
     </form>

@@ -32,6 +32,7 @@
                 <th>Açıklama</th>
                 <th>Fiyat</th>
                 <th>Kategori</th>
+                <th>Resim</th>
                 <th>İşlemler</th>
             </tr>
         </thead>
@@ -50,22 +51,16 @@
                         @endif
                     </td>
                     <td>
-                        @if(Auth::check() && $product->user_id == Auth::id())
-                            <a href="{{ route('products.update', ['id' => $product->id]) }}" class="btn btn-primary btn-sm">Düzenle</a>
-                            <a href="{{ route('products.delete', $product->id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Bu ürünü silmek istediğinizden emin misiniz?')">Sil</a>
-                            @else
-                            <form action="{{ route('orders.create') }}" method="post">
-                                @csrf
-                                <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                <button type="submit" class="btn btn-success btn-sm">Sepete Ekle</button>
-                            </form>
-                        @endif
+                        <img src="{{ asset('images/' . $product->image) }}" alt="{{ $product->name }} Image" style="max-width: 100px;">
                     </td>
-
+                    <td>
+                        <!-- İşlemler -->
+                    </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>

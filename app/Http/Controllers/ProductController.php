@@ -27,19 +27,25 @@ class ProductController extends Controller
             'description' => 'required',
             'price' => 'required|numeric',
             'category_id' => 'required|exists:product_categories,id',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+        $imageName = time().'.'.$request->image->extension();
+
+        $request->image->move(public_path('images'), $imageName);
+
         $product = new Products();
         $product->name = $request->name;
         $product->user_id = Auth::user()->id;
         $product->description = $request->description;
         $product->price = $request->price;
         $product->category_id = $request->category_id;
-        $product->image = 1;
+        $product->image = $imageName;
         $product->status = 1;
         $product->save();
 
-    return redirect()->route('products.index')->with('success', 'The product was created successfully.');
+        return redirect()->route('products.index')->with('success', 'The product was created successfully.');
     }
+
 
     public function update($id){
         $product = Products::findOrFail($id);
