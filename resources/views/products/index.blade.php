@@ -13,10 +13,6 @@
 <div class="container mt-5">
     <h2 class="mb-4">Ürün Listesi</h2>
 
-    <div class="mb-3 d-flex justify-content-between">
-        <a href="{{ route('products.create') }}" class="btn btn-success">Ürün Ekle</a>
-    </div>
-
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}

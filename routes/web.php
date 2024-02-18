@@ -3,6 +3,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\ProductManagementController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -51,4 +52,8 @@ Route::prefix('orders')->group(function (){
     Route::get('/', [OrderController::class,'index'])->name('orders.index');
     Route::post('/create', [OrderController::class, 'create'])->name('orders.create');
     Route::get('/confirm-cart', [OrderController::class, 'confirmCart'])->name('orders.confirmCart');
+});
+
+Route::prefix('productmanagement')->group(function(){
+    Route::get('/', [ProductManagementController::class, 'index'])->name('productmanagement.index');
 });

@@ -5,8 +5,14 @@
             <nav>
                 <ul class="list-unstyled mb-0 d-flex">
                     <li class="mr-3"><a href="{{ route('homepage') }}" class="text-light">Anasayfa</a></li>
-                    <li class="mr-3"><a href="{{ route('products.index') }}" class="text-light">Ürünler</a></li>
-                    <li class="mr-3"><a href="{{ route('orders.index') }}" class="text-light">Sepetim</a></li>
+                    @if(Auth::check())
+                        @if(Auth::user()->role === 'company')
+                            <li class="mr-3"><a href="{{ route('productmanagement.index') }}" class="text-light">Ürün Yönetimi</a></li>
+                        @else
+                            <li class="mr-3"><a href="{{ route('products.index') }}" class="text-light">Ürünler</a></li>
+                            <li class="mr-3"><a href="{{ route('orders.index') }}" class="text-light">Sepetim</a></li>
+                        @endif
+                    @endif
                 </ul>
             </nav>
         </div>
