@@ -15,17 +15,26 @@ use Illuminate\Support\Facades\DB;
 class OrderController extends Controller
 {
     public function index()
-{
-    $pending_orders = Orders::with('getOrderItems.getProduct.getCategory')
-        ->where('status', 0)
-        ->get();
+    {
+        if (Auth::check()) {
+            $user_id = Auth::id();
 
-    $confirmed_orders = Orders::with('getOrderItems.getProduct.getCategory')
-        ->where('status', 1)
-        ->get();
+            $pending_orders = Orders::with('getOrderItems.getProduct.getCategory')
+                ->where('status', 0)
+                ->where('user_id', $user_id)
+                ->get();
 
-    return view('orders.index', compact('pending_orders', 'confirmed_orders'));
-}
+            $confirmed_orders = Orders::with('getOrderItems.getProduct.getCategory')
+                ->where('status', 1)
+                ->where('user_id', $user_id)
+                ->get();
+
+            return view('orders.index', compact('pending_orders', 'confirmed_orders'));
+        } else {
+            return redirect()->route('login')->with('error', 'Siparişlerinizi görmek için giriş yapmalısınız.');
+        }
+    }
+
 
     public function create(Request $request)
     {

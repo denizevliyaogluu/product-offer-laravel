@@ -2,6 +2,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\HomepageController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,9 @@ Route::get('/', function () {
     return redirect()->route('products.index');
 })->middleware('auth');
 
+//homepage
+Route::get('/homepage', [HomepageController::class, 'index'])->name('homepage');
+
 // Login
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'authenticate'])->name('auth.authenticate');
@@ -36,10 +40,10 @@ Route::prefix('products')->group(function () {
     Route::get('/', [ProductController::class, 'index'])->name('products.index');
     Route::get('/create', [ProductController::class, 'create'])->name('products.create');
     Route::post('/create', [ProductController::class, 'createPost'])->name('products.create.post');
-    Route::get('/update/{id}', [ProductController::class, 'update'])->name('products.update');
-    Route::post('/update/{id}', [ProductController::class, 'updatePost'])->name('products.update.post');
-    Route::get('/delete/{id}', [ProductController::class, 'delete'])->name('products.delete');
-    Route::get('/show/{id}', [ProductController::class, 'show'])->name('products.show');
+    Route::get('/update/{uniqid}', [ProductController::class, 'update'])->name('products.update');
+    Route::post('/update/{uniqid}', [ProductController::class, 'updatePost'])->name('products.update.post');
+    Route::get('/delete/{uniqid}', [ProductController::class, 'delete'])->name('products.delete');
+    Route::get('/show/{uniqid}', [ProductController::class, 'show'])->name('products.show');
 });
 
 //orders

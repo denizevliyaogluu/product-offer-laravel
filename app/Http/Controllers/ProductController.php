@@ -16,8 +16,8 @@ class ProductController extends Controller
         return view('products.index', compact('products'));
     }
 
-    public function show($id){
-        $product = Products::findOrFail($id);
+    public function show($uniqid){
+        $product = Products::where('uniqid', $uniqid)->firstOrFail();
         return view('products.show', compact('product'));
     }
 
@@ -39,6 +39,7 @@ class ProductController extends Controller
 
         $request->image->move(public_path('images'), $imageName);
 
+        $uniqid = uniqid();
         $product = new Products();
         $product->name = $request->name;
         $product->user_id = Auth::user()->id;
@@ -47,19 +48,20 @@ class ProductController extends Controller
         $product->category_id = $request->category_id;
         $product->image = $imageName;
         $product->status = 1;
+        $product->uniqid = $uniqid;
         $product->save();
 
         return redirect()->route('products.index')->with('success', 'The product was created successfully.');
     }
 
 
-    public function update($id){
-        $product = Products::findOrFail($id);
+    public function update($uniqid){
+        $product = Products::where('uniqid', $uniqid)->firstOrFail();
         $categories = ProductCategories::all();
         return view('products.update', compact('product', 'categories'));
     }
 
-    public function updatePost(Request $request, $id){
+    public function updatePost(Request $request, $uniqid){
         $request->validate([
             'name' => 'required',
             'description' => 'required',
@@ -67,7 +69,7 @@ class ProductController extends Controller
             'category_id' => 'required|exists:product_categories,id',
         ]);
 
-        $product = Products::findOrFail($id);
+        $product = Products::where('uniqid', $uniqid)->firstOrFail();
         $product->name = $request->name;
         $product->description = $request->description;
         $product->price = $request->price;
@@ -77,9 +79,9 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'The product has been updated successfully.');
     }
 
-    public function delete($id)
+    public function delete($uniqid)
     {
-        $product = Products::findOrFail($id);
+        $product = Products::where('uniqid', $uniqid)->firstOrFail();
         $product->delete();
 
         return redirect()->route('products.index')->with('success', 'The product has been deleted successfully.');

@@ -8,6 +8,8 @@
 </head>
 <body>
 
+@include('layouts.header')
+
 <div class="container mt-5">
     <h2 class="mb-4">Ürün Listesi</h2>
 
@@ -26,12 +28,12 @@
         @foreach($products as $product)
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <a href="{{ route('products.show', $product->id) }}">
+                    <a href="{{ route('products.show', $product->uniqid) }}">
                         <img src="{{ asset('images/' . $product->image) }}" class="card-img-top" alt="{{ $product->name }} Image">
                     </a>
                     <div class="card-body">
                         <h5 class="card-title">
-                            <a href="{{ route('products.show', $product->id) }}" class="text-decoration-none">{{ $product->name }}</a>
+                            <a href="{{ route('products.show', $product->uniqid) }}" class="text-decoration-none">{{ $product->name }}</a>
                         </h5>
                         <p class="card-text">{{ $product->description }}</p>
                         <p class="card-text">Fiyat: {{ $product->price }}</p>
@@ -56,6 +58,9 @@
     </div>
 
 </div>
+
+@include('layouts.footer')
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

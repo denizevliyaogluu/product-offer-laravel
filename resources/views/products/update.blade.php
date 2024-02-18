@@ -9,6 +9,8 @@
 </head>
 <body>
 
+@include('layouts.header')
+
 <div class="container mt-5">
     <h2 class="mb-4">Ürün Güncelleme</h2>
 
@@ -45,6 +47,8 @@
         <button type="submit" class="btn btn-primary">Güncelle</button>
     </form>
 </div>
+
+@include('layouts.footer')
 
 <!-- Bootstrap JS ve Popper.js -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
