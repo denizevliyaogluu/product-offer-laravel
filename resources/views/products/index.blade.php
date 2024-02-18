@@ -11,10 +11,8 @@
 <div class="container mt-5">
     <h2 class="mb-4">Ürün Listesi</h2>
 
-    <div class="mb-3">
+    <div class="mb-3 d-flex justify-content-between">
         <a href="{{ route('products.create') }}" class="btn btn-success">Ürün Ekle</a>
-    </div>
-    <div class="mb-3">
         <a href="{{ route('orders.index') }}" class="btn btn-primary">Sepete Git</a>
     </div>
 
@@ -24,42 +22,38 @@
         </div>
     @endif
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Ürün Adı</th>
-                <th>Açıklama</th>
-                <th>Fiyat</th>
-                <th>Kategori</th>
-                <th>Resim</th>
-                <th>İşlemler</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($products as $product)
-                <tr>
-                    <td>{{ $product->id }}</td>
-                    <td>{{ $product->name }}</td>
-                    <td>{{ $product->description }}</td>
-                    <td>{{ $product->price }}</td>
-                    <td>
-                        @if($product->getCategory)
-                            {{ $product->getCategory->name }}
-                        @else
-                            Kategori Yok
-                        @endif
-                    </td>
-                    <td>
-                        <img src="{{ asset('images/' . $product->image) }}" alt="{{ $product->name }} Image" style="max-width: 100px;">
-                    </td>
-                    <td>
-                        <!-- İşlemler -->
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+    <div class="row">
+        @foreach($products as $product)
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <a href="{{ route('products.show', $product->id) }}">
+                        <img src="{{ asset('images/' . $product->image) }}" class="card-img-top" alt="{{ $product->name }} Image">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="{{ route('products.show', $product->id) }}" class="text-decoration-none">{{ $product->name }}</a>
+                        </h5>
+                        <p class="card-text">{{ $product->description }}</p>
+                        <p class="card-text">Fiyat: {{ $product->price }}</p>
+                        <p class="card-text">Kategori:
+                            @if($product->getCategory)
+                                {{ $product->getCategory->name }}
+                            @else
+                                Kategori Yok
+                            @endif
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <form action="{{ route('orders.create') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <button type="submit" class="btn btn-sm btn-success">Sepete Ekle</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
 
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

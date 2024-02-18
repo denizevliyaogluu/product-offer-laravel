@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('products.index');
 })->middleware('auth');
 
 // Login
@@ -39,6 +39,7 @@ Route::prefix('products')->group(function () {
     Route::get('/update/{id}', [ProductController::class, 'update'])->name('products.update');
     Route::post('/update/{id}', [ProductController::class, 'updatePost'])->name('products.update.post');
     Route::get('/delete/{id}', [ProductController::class, 'delete'])->name('products.delete');
+    Route::get('/show/{id}', [ProductController::class, 'show'])->name('products.show');
 });
 
 //orders
