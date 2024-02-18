@@ -22,8 +22,7 @@ Route::get('/', function () {
     return redirect()->route('homepage');
 })->middleware('auth');
 
-//homepage
-Route::get('/homepage', [HomepageController::class, 'index'])->name('homepage');
+
 
 // Login
 Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -37,23 +36,29 @@ Route::post('/register', [AuthController::class, 'store'])->name('auth.store');
 Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 //products
-Route::prefix('products')->group(function () {
-    Route::get('/', [ProductController::class, 'index'])->name('products.index');
-    Route::get('/create', [ProductController::class, 'create'])->name('products.create');
-    Route::post('/create', [ProductController::class, 'createPost'])->name('products.create.post');
-    Route::get('/update/{uniqid}', [ProductController::class, 'update'])->name('products.update');
-    Route::post('/update/{uniqid}', [ProductController::class, 'updatePost'])->name('products.update.post');
-    Route::get('/delete/{uniqid}', [ProductController::class, 'delete'])->name('products.delete');
-    Route::get('/show/{uniqid}', [ProductController::class, 'show'])->name('products.show');
+Route::middleware(['role:user'])->group(function () {
+    //homepage
+    Route::get('/homepage', [HomepageController::class, 'index'])->name('homepage');
+    Route::prefix('products')->group(function () {
+        Route::get('/', [ProductController::class, 'index'])->name('products.index');
+        Route::get('/create', [ProductController::class, 'create'])->name('products.create');
+        Route::post('/create', [ProductController::class, 'createPost'])->name('products.create.post');
+        Route::get('/update/{uniqid}', [ProductController::class, 'update'])->name('products.update');
+        Route::post('/update/{uniqid}', [ProductController::class, 'updatePost'])->name('products.update.post');
+        Route::get('/delete/{uniqid}', [ProductController::class, 'delete'])->name('products.delete');
+        Route::get('/show/{uniqid}', [ProductController::class, 'show'])->name('products.show');
+    });
+
+    Route::prefix('orders')->group(function () {
+        Route::get('/', [OrderController::class, 'index'])->name('orders.index');
+        Route::post('/create', [OrderController::class, 'create'])->name('orders.create');
+        Route::get('/confirm-cart', [OrderController::class, 'confirmCart'])->name('orders.confirmCart');
+    });
 });
 
-//orders
-Route::prefix('orders')->group(function (){
-    Route::get('/', [OrderController::class,'index'])->name('orders.index');
-    Route::post('/create', [OrderController::class, 'create'])->name('orders.create');
-    Route::get('/confirm-cart', [OrderController::class, 'confirmCart'])->name('orders.confirmCart');
-});
 
-Route::prefix('productmanagement')->group(function(){
-    Route::get('/', [ProductManagementController::class, 'index'])->name('productmanagement.index');
+Route::prefix('productmanagement')->group(function () {
+    Route::get('/', [ProductManagementController::class, 'index'])
+        ->name('productmanagement.index')
+        ->middleware('role:company');
 });

@@ -51,7 +51,7 @@ class ProductController extends Controller
         $product->uniqid = $uniqid;
         $product->save();
 
-        return redirect()->route('products.index')->with('success', 'The product was created successfully.');
+        return redirect()->route('productmanagement.index')->with('success', 'The product was created successfully.');
     }
 
 
@@ -76,7 +76,7 @@ class ProductController extends Controller
         $product->category_id = $request->category_id;
         $product->save();
 
-        return redirect()->route('products.index')->with('success', 'The product has been updated successfully.');
+        return redirect()->route('productmanagement.index')->with('success', 'The product has been updated successfully.');
     }
 
     public function delete($uniqid)

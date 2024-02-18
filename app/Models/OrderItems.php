@@ -18,6 +18,7 @@ class OrderItems extends Model
     }
 
     public function getProduct(){
-        return $this->hasOne(Products::class, 'id', 'product_id');
+        return $this->belongsTo(Products::class, 'product_id', 'id');
     }
+
 }

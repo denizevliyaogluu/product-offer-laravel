@@ -17,10 +17,6 @@ class Products extends Model
         return $this->hasOne(User::class);
     }
 
-    public function getOrderItems(){
-        return $this->hasMany(OrderItems::class);
-    }
-
     public function getCategory(){
         return $this->belongsTo(ProductCategories::class, 'category_id' , 'id');
     }

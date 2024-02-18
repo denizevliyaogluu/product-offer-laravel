@@ -55,6 +55,7 @@ class OrderController extends Controller
             $orderItem = new OrderItems();
             $orderItem->order_id = $order->id;
             $orderItem->product_id = $productId;
+            $orderItem->status = 0;
             $orderItem->save();
 
             // Siparişin toplam tutarını güncelle

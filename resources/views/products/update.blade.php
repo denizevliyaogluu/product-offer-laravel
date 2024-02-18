@@ -20,7 +20,7 @@
         </div>
     @endif
 
-    <form method="post" action="{{ route('products.update.post', $product->id) }}">
+    <form method="post" action="{{ route('products.update.post', $product->uniqid) }}">
         @csrf
         <div class="form-group">
             <label for="name">Ürün Adı:</label>
