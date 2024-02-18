@@ -14,18 +14,17 @@
     <div class="row">
         <!-- Kategoriler -->
         <div class="col-md-4 mb-4">
-            <h3>Kategoriler</h3>
+            <h3>Categories</h3>
             <div class="list-group">
-                <a href="{{ route('homepage') }}" class="list-group-item list-group-item-action">Tüm Kategoriler</a>
+                <a href="{{ route('homepage') }}" class="list-group-item list-group-item-action">All Categories</a>
                 @foreach($categories as $category)
                     <a href="{{ route('homepage', ['category_id' => $category->id]) }}" class="list-group-item list-group-item-action">{{ $category->name }}</a>
                 @endforeach
             </div>
         </div>
 
-        <!-- Ürünler -->
         <div class="col-md-8">
-            <h3>Ürünler</h3>
+            <h3>Products</h3>
             <div class="row">
                 @foreach($products as $product)
                     <div class="col-md-4 mb-4">

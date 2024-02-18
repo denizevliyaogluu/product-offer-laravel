@@ -47,20 +47,24 @@
     <h5>Register</h5>
 
     <div class="form-floating">
-      <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
-    </div>
+        <select class="form-select" id="role" name="role" required>
+          <option value="user">User</option>
+          <option value="company">Company</option>
+        </select>
+        <label for="role">Select Role</label>
+      </div>
 
     <div class="form-floating">
-      <select class="form-select" id="role" name="role" required>
-        <option value="user">User</option>
-        <option value="company">Company</option>
-      </select>
-      <label for="role">Select Role</label>
+      <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
     </div>
 
     <div class="form-floating">
       <input type="text" class="form-control" id="name" name="name" placeholder="Your Name">
     </div>
+
+    <div class="form-floating">
+        <input type="text" class="form-control" id="addres" name="addres" placeholder="Address">
+      </div>
 
     <div class="form-floating">
       <input type="password" class="form-control" name="password" id="password" placeholder="Password">
@@ -70,7 +74,6 @@
       <input type="password" class="form-control" name="confirm-password" id="confirm-password" placeholder="Confirm Password">
     </div>
 
-    <!-- Şirket bilgileri alanları başlangıcı -->
     <div id="companyFields" class="hidden">
       <div class="form-floating">
         <input type="text" class="form-control" id="company_name" name="company_name" placeholder="Company Name">
@@ -82,7 +85,6 @@
         <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Company Phone Number">
       </div>
     </div>
-    <!-- Şirket bilgileri alanları sonu -->
 
     <div class="checkbox mb-3">
       <label>
@@ -95,16 +97,11 @@
 </main>
 
 <script>
-  // Rol seçimi değiştiğinde
   document.getElementById('role').addEventListener('change', function() {
-    // Seçilen rolü al
     var selectedRole = this.value;
-
-    // Eğer "company" seçildiyse, şirket bilgileri alanlarını göster
     if (selectedRole === 'company') {
       document.getElementById('companyFields').classList.remove('hidden');
     } else {
-      // Diğer durumlarda şirket bilgileri alanlarını gizle
       document.getElementById('companyFields').classList.add('hidden');
     }
   });

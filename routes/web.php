@@ -19,10 +19,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('homepage');
+    if (auth()->user()->role === 'company') {
+        return redirect()->route('productmanagement.index');
+    } else {
+        return redirect()->route('homepage');
+    }
 })->middleware('auth');
-
-
 
 // Login
 Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -41,11 +43,6 @@ Route::middleware(['role:user'])->group(function () {
     Route::get('/homepage', [HomepageController::class, 'index'])->name('homepage');
     Route::prefix('products')->group(function () {
         Route::get('/', [ProductController::class, 'index'])->name('products.index');
-        Route::get('/create', [ProductController::class, 'create'])->name('products.create');
-        Route::post('/create', [ProductController::class, 'createPost'])->name('products.create.post');
-        Route::get('/update/{uniqid}', [ProductController::class, 'update'])->name('products.update');
-        Route::post('/update/{uniqid}', [ProductController::class, 'updatePost'])->name('products.update.post');
-        Route::get('/delete/{uniqid}', [ProductController::class, 'delete'])->name('products.delete');
         Route::get('/show/{uniqid}', [ProductController::class, 'show'])->name('products.show');
     });
 
@@ -56,9 +53,18 @@ Route::middleware(['role:user'])->group(function () {
     });
 });
 
+Route::middleware(['role:company'])->group(function () {
+    Route::prefix('products')->group(function () {
+        Route::get('/create', [ProductController::class, 'create'])->name('products.create');
+        Route::post('/create', [ProductController::class, 'createPost'])->name('products.create.post');
+        Route::get('/update/{uniqid}', [ProductController::class, 'update'])->name('products.update');
+        Route::post('/update/{uniqid}', [ProductController::class, 'updatePost'])->name('products.update.post');
+        Route::get('/delete/{uniqid}', [ProductController::class, 'delete'])->name('products.delete');
+    });
+    Route::prefix('productmanagement')->group(function () {
+        Route::get('/', [ProductManagementController::class, 'index'])
+            ->name('productmanagement.index');
+        Route::get('/product/{productId}/order-details', [ProductManagementController::class, 'showOrderDetails'])->name('product.order.details');
 
-Route::prefix('productmanagement')->group(function () {
-    Route::get('/', [ProductManagementController::class, 'index'])
-        ->name('productmanagement.index')
-        ->middleware('role:company');
+    });
 });

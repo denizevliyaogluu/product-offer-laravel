@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ürün Oluştur</title>
+    <title>Create Product</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -12,7 +12,7 @@
 @include('layouts.header')
 
 <div class="container mt-5">
-    <h2 class="mb-4">Ürün Oluştur</h2>
+    <h2 class="mb-4">Create Product</h2>
 
     <!-- Hata Mesajları -->
     @if($errors->any())
@@ -35,19 +35,19 @@
     <form method="post" action="{{ route('products.create.post') }}" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
-            <label for="name">Ürün Adı:</label>
+            <label for="name">Product Name:</label>
             <input type="text" class="form-control" id="name" name="name" required>
         </div>
         <div class="form-group">
-            <label for="description">Açıklama:</label>
+            <label for="description">Description:</label>
             <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
         </div>
         <div class="form-group">
-            <label for="price">Fiyat:</label>
+            <label for="price">Price:</label>
             <input type="text" class="form-control" id="price" name="price" required>
         </div>
         <div class="form-group">
-            <label for="category_id">Kategori:</label>
+            <label for="category_id">Category:</label>
             <select class="form-control" id="category_id" name="category_id" required>
                 @foreach($categories as $category)
                     <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -55,10 +55,10 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="image">Fotoğraf:</label>
+            <label for="image">Image:</label>
             <input type="file" class="form-control-file" id="image" name="image" required>
         </div>
-        <button type="submit" class="btn btn-primary">Ürün Oluştur</button>
+        <button type="submit" class="btn btn-primary">Create</button>
     </form>
 </div>
 

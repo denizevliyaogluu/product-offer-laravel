@@ -48,7 +48,7 @@ class OrderController extends Controller
                 $order = new Orders();
                 $order->user_id = Auth::id();
                 $order->total_amount = 0;
-                $order->status = 0; // Yeni bir sipariş oluşturulduğunda status 0 olmalı
+                $order->status = 0;
                 $order->save();
             }
 

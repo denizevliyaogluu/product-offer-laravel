@@ -14,7 +14,7 @@ class Orders extends Model
     protected $table = 'orders';
 
     public function getUser(){
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function getOrderItems(){

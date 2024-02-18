@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $product->name }} - Ürün Detayı</title>
+    <title>{{ $product->name }} - Product Detail</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .product-image {
@@ -23,19 +23,19 @@
         </div>
         <div class="col-md-6 mb-4">
             <h2>{{ $product->name }}</h2>
-            <p><strong>Açıklama:</strong> {{ $product->description }}</p>
-            <p><strong>Fiyat:</strong> {{ $product->price }}</p>
-            <p><strong>Kategori:</strong>
+            <p><strong>Description:</strong> {{ $product->description }}</p>
+            <p><strong>Price:</strong> {{ $product->price }}</p>
+            <p><strong>Category:</strong>
                 @if($product->getCategory)
                     {{ $product->getCategory->name }}
                 @else
-                    Kategori Yok
+                    No Category
                 @endif
             </p>
             <form action="{{ route('orders.create') }}" method="POST">
                 @csrf
                 <input type="hidden" name="product_id" value="{{ $product->id }}">
-                <button type="submit" class="btn btn-lg btn-success">Sepete Ekle</button>
+                <button type="submit" class="btn btn-lg btn-success">Add Cart</button>
             </form>
         </div>
     </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alışveriş Sepetiniz</title>
+    <title>Your Cart</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -11,7 +11,7 @@
 @include('layouts.header')
 
 <div class="container mt-5">
-    <h2 class="mb-4">Sepet</h2>
+    <h2 class="mb-4">Cart</h2>
 
     @if(session('success'))
         <div class="alert alert-success">
@@ -21,15 +21,15 @@
 
     @if($pending_orders->count() > 0)
         <div class="card mb-3">
-            <div class="card-header">Onaylanmayan Sipariş</div>
+            <div class="card-header">Unconfirmed Order</div>
             <div class="card-body">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Sipariş Numarası</th>
-                            <th>Ürün Adı</th>
-                            <th>Fiyat</th>
-                            <th>Kategori</th>
+                            <th>Order ID</th>
+                            <th>Product Name</th>
+                            <th>Price</th>
+                            <th>Category</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -43,7 +43,7 @@
                                         @if($order_item->getProduct->getCategory)
                                             {{ $order_item->getProduct->getCategory->name }}
                                         @else
-                                            Kategori Yok
+                                            No Category
                                         @endif
                                     </td>
                                 </tr>
@@ -52,10 +52,10 @@
                     </tbody>
                 </table>
                 <div>
-                    <strong>Toplam Fiyat: </strong><b>{{ $pending_orders->first()->total_amount }}</b>
+                    <strong>Total Price: </strong><b>{{ $pending_orders->first()->total_amount }}</b>
                 </div>
                 <div class="mb-3">
-                    <a href="{{ route('orders.confirmCart') }}" class="btn btn-success">Sepeti Onayla</a>
+                    <a href="{{ route('orders.confirmCart') }}" class="btn btn-success">Confirm Cart</a>
                 </div>
             </div>
         </div>
@@ -63,14 +63,14 @@
 
     @foreach($confirmed_orders as $order)
         <div class="card mb-3">
-            <div class="card-header">Onaylanmış Sipariş #{{ $order->id }}</div>
+            <div class="card-header">Confirmed Order #{{ $order->id }}</div>
             <div class="card-body">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Ürün Adı</th>
-                            <th>Fiyat</th>
-                            <th>Kategori</th>
+                            <th>Product Name</th>
+                            <th>Price</th>
+                            <th>Category</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -82,7 +82,7 @@
                                     @if($order_item->getProduct->getCategory)
                                         {{ $order_item->getProduct->getCategory->name }}
                                     @else
-                                        Kategori Yok
+                                        No Category
                                     @endif
                                 </td>
                             </tr>
@@ -90,7 +90,7 @@
                     </tbody>
                 </table>
                 <div>
-                    <strong>Toplam Fiyat: </strong><b>{{ $order->total_amount }}</b>
+                    <strong>Total Price: </strong><b>{{ $order->total_amount }}</b>
                 </div>
             </div>
         </div>

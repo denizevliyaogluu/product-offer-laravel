@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ürün Listesi</title>
+    <title>Product Management</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -14,21 +14,21 @@
 
 
     <div class="container">
-        <h1>Ürün Yönetimi</h1>
+        <h1>Product Management</h1>
 
         <div class="mb-3 d-flex justify-content-between">
-            <a href="{{ route('products.create') }}" class="btn btn-dark">Ürün Ekle</a>
+            <a href="{{ route('products.create') }}" class="btn btn-dark">Create Product</a>
         </div>
 
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Ürün Resmi</th>
-                    <th scope="col">Ürün Adı</th>
-                    <th scope="col">Fiyat</th>
-                    <th scope="col">Açıklama</th>
-                    <th scope="col">İşlemler</th>
-                    <th scope="col">Siparişler</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Operations</th>
+                    <th scope="col">Details</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,22 +41,26 @@
         <td>{{ $product->description }}</td>
         <td>
             <a href="{{ route('products.update', $product->uniqid) }}"
-                class="btn btn-secondary btn-sm">Düzenle</a>
+                class="btn btn-secondary btn-sm">Update</a>
             <form action="{{ route('products.delete', $product->uniqid) }}" method="POST"
                 class="d-inline">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-dark btn-sm"
-                    onclick="return confirm('Bu ürünü silmek istediğinizden emin misiniz?')">Sil</button>
+                    onclick="return confirm('Bu ürünü silmek istediğinizden emin misiniz?')">Delete</button>
             </form>
         </td>
         <td>
+            <a href="{{ route('product.order.details', $product->id) }}" class="btn btn-primary btn-sm">Orders</a>
+        </td>
+
+        {{-- <td>
             <ul>
                 @foreach ($product->orders as $order)
                     Sipariş Numarası: {{ $order->id }}
                 @endforeach
             </ul>
-        </td>
+        </td> --}}
     </tr>
 @endforeach
 

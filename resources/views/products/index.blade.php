@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ürün Listesi</title>
+    <title>Product List</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -11,7 +11,7 @@
 @include('layouts.header')
 
 <div class="container mt-5">
-    <h2 class="mb-4">Ürün Listesi</h2>
+    <h2 class="mb-4">Product List</h2>
 
     @if(session('success'))
         <div class="alert alert-success">
@@ -31,12 +31,12 @@
                             <a href="{{ route('products.show', $product->uniqid) }}" class="text-decoration-none">{{ $product->name }}</a>
                         </h5>
                         <p class="card-text">{{ $product->description }}</p>
-                        <p class="card-text">Fiyat: {{ $product->price }}</p>
-                        <p class="card-text">Kategori:
+                        <p class="card-text">Price: {{ $product->price }}</p>
+                        <p class="card-text">Category:
                             @if($product->getCategory)
                                 {{ $product->getCategory->name }}
                             @else
-                                Kategori Yok
+                                No Category
                             @endif
                         </p>
                     </div>
@@ -44,7 +44,7 @@
                         <form action="{{ route('orders.create') }}" method="POST">
                             @csrf
                             <input type="hidden" name="product_id" value="{{ $product->id }}">
-                            <button type="submit" class="btn btn-sm btn-success">Sepete Ekle</button>
+                            <button type="submit" class="btn btn-sm btn-success">Add Cart</button>
                         </form>
                     </div>
                 </div>
