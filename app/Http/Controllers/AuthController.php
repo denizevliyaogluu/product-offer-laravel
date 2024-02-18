@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Company;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -42,13 +43,35 @@ class AuthController extends Controller
             'name' => 'required',
             'email' => 'required|unique:users,email',
             'password' => 'required',
-            'confirm-password' => 'required|same:password'
+            'confirm-password' => 'required|same:password',
+            'role' => 'required|in:user,company',
         ]);
-        $data = $request->except('confirm-password', 'password');
-        $data['password'] = Hash::make($request->password);
-        User::create($data);
+
+        $userData = $request->except('confirm-password', 'password', 'role');
+        $userData['password'] = Hash::make($request->password);
+
+        // Kullanıcıyı oluştur
+        $user = User::create($userData);
+
+        // Kullanıcıya ait rolü kaydet
+        $user->update(['role' => $request->role]);
+
+        // Eğer kullanıcı rolü "company" ise, şirket bilgilerini kaydet
+        if ($request->role == 'company') {
+            $companyData = [
+                'user_id' => $user->id,
+                'company_name' => $request->company_name,
+                'address' => $request->address,
+                'phone_number' => $request->phone_number,
+            ];
+
+            Company::create($companyData);
+        }
+
         return redirect('/login');
     }
+
+
 
     public function logout(Request $request)
     {

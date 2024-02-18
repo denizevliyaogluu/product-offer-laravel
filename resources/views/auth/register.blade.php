@@ -32,6 +32,11 @@
       margin-top: 10px;
       font-size: 16px;
     }
+
+    /* Görünmez stil */
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 <body class="text-center">
@@ -46,6 +51,14 @@
     </div>
 
     <div class="form-floating">
+      <select class="form-select" id="role" name="role" required>
+        <option value="user">User</option>
+        <option value="company">Company</option>
+      </select>
+      <label for="role">Select Role</label>
+    </div>
+
+    <div class="form-floating">
       <input type="text" class="form-control" id="name" name="name" placeholder="Your Name">
     </div>
 
@@ -57,6 +70,20 @@
       <input type="password" class="form-control" name="confirm-password" id="confirm-password" placeholder="Confirm Password">
     </div>
 
+    <!-- Şirket bilgileri alanları başlangıcı -->
+    <div id="companyFields" class="hidden">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="company_name" name="company_name" placeholder="Company Name">
+      </div>
+      <div class="form-floating">
+        <input type="text" class="form-control" id="address" name="address" placeholder="Company Address">
+      </div>
+      <div class="form-floating">
+        <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Company Phone Number">
+      </div>
+    </div>
+    <!-- Şirket bilgileri alanları sonu -->
+
     <div class="checkbox mb-3">
       <label>
         <input type="checkbox" value="remember-me"> Remember me
@@ -66,6 +93,22 @@
     <button class="w-100 btn btn-lg btn-primary" type="submit">Sign Up</button>
   </form>
 </main>
+
+<script>
+  // Rol seçimi değiştiğinde
+  document.getElementById('role').addEventListener('change', function() {
+    // Seçilen rolü al
+    var selectedRole = this.value;
+
+    // Eğer "company" seçildiyse, şirket bilgileri alanlarını göster
+    if (selectedRole === 'company') {
+      document.getElementById('companyFields').classList.remove('hidden');
+    } else {
+      // Diğer durumlarda şirket bilgileri alanlarını gizle
+      document.getElementById('companyFields').classList.add('hidden');
+    }
+  });
+</script>
 
 </body>
 </html>
