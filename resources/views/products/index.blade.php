@@ -15,7 +15,6 @@
 
     <div class="mb-3 d-flex justify-content-between">
         <a href="{{ route('products.create') }}" class="btn btn-success">Ürün Ekle</a>
-        <a href="{{ route('orders.index') }}" class="btn btn-primary">Sepete Git</a>
     </div>
 
     @if(session('success'))

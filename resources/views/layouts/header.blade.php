@@ -7,9 +7,17 @@
                     <li class="mr-3"><a href="{{ route('homepage') }}" class="text-light">Anasayfa</a></li>
                     <li class="mr-3"><a href="{{ route('products.index') }}" class="text-light">Ürünler</a></li>
                     <li class="mr-3"><a href="{{ route('orders.index') }}" class="text-light">Sepetim</a></li>
-                    <li><a href="#" class="text-light">Kullanıcı İşlemleri</a></li>
                 </ul>
             </nav>
         </div>
+        @if (Auth::check())
+            <div class="text-light mt-2">{{ Auth::user()->name }} | <a href="{{ route('auth.logout') }}"
+                    class="text-light" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Çıkış Yap</a></div>
+            <form id="logout-form" action="{{ route('auth.logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+        @else
+            <a href="{{ route('login') }}" class="text-light">Giriş Yap</a>
+        @endif
     </div>
 </header>

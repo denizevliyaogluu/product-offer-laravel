@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('products.index');
+    return redirect()->route('homepage');
 })->middleware('auth');
 
 //homepage
@@ -48,7 +48,7 @@ Route::prefix('products')->group(function () {
 
 //orders
 Route::prefix('orders')->group(function (){
-    Route::get('/index', [OrderController::class,'index'])->name('orders.index');
+    Route::get('/', [OrderController::class,'index'])->name('orders.index');
     Route::post('/create', [OrderController::class, 'create'])->name('orders.create');
     Route::get('/confirm-cart', [OrderController::class, 'confirmCart'])->name('orders.confirmCart');
 });
