@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductCategories;
+use App\Models\ProductImages;
 use App\Models\Products;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -11,15 +12,24 @@ use Illuminate\Support\Facades\Hash;
 
 class ProductController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $products = Products::with('getCategory')->get();
+        foreach ($products as $product) {
+            $firstImage = $product->images()->first();
+            $product->first_image = $firstImage ? $firstImage->image : null;
+        }
+
         return view('products.index', compact('products'));
     }
 
-    public function show($uniqid){
-        $product = Products::where('uniqid', $uniqid)->firstOrFail();
-        return view('products.show', compact('product'));
-    }
+    public function show($uniqid)
+{
+    $product = Products::where('uniqid', $uniqid)->firstOrFail();
+    $images = ProductImages::where('product_id', $product->id)->get();
+    return view('products.show', compact('product', 'images'));
+}
+
 
 
     public function create(){
@@ -33,11 +43,8 @@ class ProductController extends Controller
             'description' => 'required',
             'price' => 'required|numeric',
             'category_id' => 'required|exists:product_categories,id',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'images.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-        $imageName = time().'.'.$request->image->extension();
-
-        $request->image->move(public_path('images'), $imageName);
 
         $uniqid = uniqid();
         $product = new Products();
@@ -46,13 +53,24 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->price = $request->price;
         $product->category_id = $request->category_id;
-        $product->image = $imageName;
         $product->status = 1;
         $product->uniqid = $uniqid;
         $product->save();
 
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $imageName = time() . '_' . $image->getClientOriginalName();
+                $image->move(public_path('images'), $imageName);
+                $productImage = new ProductImages();
+                $productImage->product_id = $product->id;
+                $productImage->image = $imageName;
+                $productImage->save();
+            }
+        }
+
         return redirect()->route('productmanagement.index')->with('success', 'The product was created successfully.');
     }
+
 
 
     public function update($uniqid){
@@ -74,6 +92,11 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->price = $request->price;
         $product->category_id = $request->category_id;
+        if ($request->hasFile('image')) {
+            $imageName = time().'.'.$request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+            $product->image = $imageName;
+        }
         $product->save();
 
         return redirect()->route('productmanagement.index')->with('success', 'The product has been updated successfully.');
@@ -84,7 +107,7 @@ class ProductController extends Controller
         $product = Products::where('uniqid', $uniqid)->firstOrFail();
         $product->delete();
 
-        return redirect()->route('products.index')->with('success', 'The product has been deleted successfully.');
+        return redirect()->route('productmanagement.index')->with('success', 'The product has been deleted successfully.');
     }
 
 }

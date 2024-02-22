@@ -21,10 +21,17 @@
 
     <div class="row">
         @foreach($products as $product)
+            @php
+                $firstImage = $product->images()->first();
+            @endphp
             <div class="col-md-4 mb-4">
                 <div class="card">
                     <a href="{{ route('products.show', $product->uniqid) }}">
-                        <img src="{{ asset('images/' . $product->image) }}" class="card-img-top" alt="{{ $product->name }} Image">
+                        @if($firstImage)
+                            <img src="{{ asset('images/' . $firstImage->image) }}" class="card-img-top" alt="{{ $product->name }} Image">
+                        @else
+                            <img src="{{ asset('images/default-image.jpg') }}" class="card-img-top" alt="Default Image">
+                        @endif
                     </a>
                     <div class="card-body">
                         <h5 class="card-title">
@@ -44,13 +51,14 @@
                         <form action="{{ route('orders.create') }}" method="POST">
                             @csrf
                             <input type="hidden" name="product_id" value="{{ $product->id }}">
-                            <button type="submit" class="btn btn-sm btn-success">Add Cart</button>
+                            <button type="submit" class="btn btn-sm btn-dark">Add to Cart</button>
                         </form>
                     </div>
                 </div>
             </div>
         @endforeach
     </div>
+
 
 </div>
 

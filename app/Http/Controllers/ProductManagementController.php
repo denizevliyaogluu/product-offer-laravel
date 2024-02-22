@@ -12,7 +12,12 @@ class ProductManagementController extends Controller
 {
     public function index()
     {
-        $products = Auth::user()->getProducts;
+        $user = Auth::user();
+        $products = $user->getProducts;
+        foreach ($products as $product) {
+            $firstImage = $product->images()->first();
+            $product->first_image = $firstImage ? asset('images/' . $firstImage->image) : asset('images/default-image.jpg');
+        }
 
         foreach ($products as $product) {
             $product->orders = OrderItems::whereHas('getOrder', function ($query) {
@@ -26,7 +31,10 @@ class ProductManagementController extends Controller
     public function showOrderDetails($productId)
     {
         $product = Products::findOrFail($productId);
-        $orders = OrderItems::where('product_id', $product->id)->with('getOrder')->get();
+        $orders = OrderItems::whereHas('getOrder', function ($query) {
+            $query->where('status', 1);
+        })->where('product_id', $product->id)->with('getOrder')->get();
         return view('productmanagement.show_order_details', compact('product', 'orders'));
     }
+
 }

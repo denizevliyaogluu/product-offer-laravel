@@ -51,13 +51,10 @@ class AuthController extends Controller
         $userData = $request->except('confirm-password', 'password', 'role');
         $userData['password'] = Hash::make($request->password);
 
-        // Kullanıcıyı oluştur
         $user = User::create($userData);
 
-        // Kullanıcıya ait rolü kaydet
         $user->update(['role' => $request->role]);
 
-        // Eğer kullanıcı rolü "company" ise, şirket bilgilerini kaydet
         if ($request->role == 'company') {
             $companyData = [
                 'user_id' => $user->id,

@@ -1,7 +1,7 @@
 <header class="bg-dark text-light py-3">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center">
-            <h1>Deniz E-Ticaret</h1>
+            <h1>E-Commerce</h1>
             <nav>
                 <ul class="list-unstyled mb-0 d-flex">
                     @if (Auth::check())

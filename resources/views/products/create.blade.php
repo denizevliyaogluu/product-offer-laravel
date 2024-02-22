@@ -14,7 +14,6 @@
 <div class="container mt-5">
     <h2 class="mb-4">Create Product</h2>
 
-    <!-- Hata Mesajları -->
     @if($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -55,8 +54,8 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="image">Image:</label>
-            <input type="file" class="form-control-file" id="image" name="image" required>
+            <label for="images">Images:</label>
+            <input type="file" class="form-control-file" id="images" name="images[]" multiple required>
         </div>
         <button type="submit" class="btn btn-primary">Create</button>
     </form>

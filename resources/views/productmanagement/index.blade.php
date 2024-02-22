@@ -33,36 +33,30 @@
             </thead>
             <tbody>
                 @foreach ($products as $product)
-    <tr>
-        <td><img src="{{ asset('images/' . $product->image) }}" class="card-img-top"
-                alt="{{ $product->name }} Image" style="max-width: 100px;"></td>
-        <td>{{ $product->name }}</td>
-        <td>{{ $product->price }}</td>
-        <td>{{ $product->description }}</td>
-        <td>
-            <a href="{{ route('products.update', $product->uniqid) }}"
-                class="btn btn-secondary btn-sm">Update</a>
-            <form action="{{ route('products.delete', $product->uniqid) }}" method="POST"
-                class="d-inline">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-dark btn-sm"
-                    onclick="return confirm('Bu ürünü silmek istediğinizden emin misiniz?')">Delete</button>
-            </form>
-        </td>
-        <td>
-            <a href="{{ route('product.order.details', $product->id) }}" class="btn btn-primary btn-sm">Orders</a>
-        </td>
-
-        {{-- <td>
-            <ul>
-                @foreach ($product->orders as $order)
-                    Sipariş Numarası: {{ $order->id }}
+                    <tr>
+                        <td><img src="{{ $product->first_image }}" class="card-img-top" alt="{{ $product->name }} Image"
+                                style="max-width: 100px;"></td>
+                        <td>{{ $product->name }}</td>
+                        <td>{{ $product->price }}</td>
+                        <td>{{ $product->description }}</td>
+                        <td>
+                            <a href="{{ route('products.update', $product->uniqid) }}"
+                                class="btn btn-secondary btn-sm">Update</a>
+                            <form action="{{ route('products.delete', $product->uniqid) }}" method="POST"
+                                class="d-inline">
+                                @csrf
+                                @method('GET')
+                                <button type="submit" class="btn btn-dark btn-sm"
+                                    onclick="return confirm('Bu ürünü silmek istediğinizden emin misiniz?')">Delete</button>
+                            </form>
+                        </td>
+                        <td>
+                            <a href="{{ route('product.order.details', $product->id) }}"
+                                class="btn btn-primary btn-sm">Orders</a>
+                        </td>
+                    </tr>
                 @endforeach
-            </ul>
-        </td> --}}
-    </tr>
-@endforeach
+
 
             </tbody>
         </table>
