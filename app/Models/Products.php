@@ -2,28 +2,31 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class Products extends Model
 {
     protected $table = 'products';
 
-    public function getUser(){
+    public function getUser()
+    {
         return $this->hasOne(User::class);
     }
 
-    public function getCategory(){
-        return $this->belongsTo(ProductCategories::class, 'category_id' , 'id');
+    public function getCategory()
+    {
+        return $this->belongsTo(ProductCategories::class, 'category_id', 'id');
     }
 
     public function images()
-{
-    return $this->hasMany(ProductImages::class, 'product_id');
-}
+    {
+        return $this->hasMany(ProductImages::class, 'product_id');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(ProductComments::class, 'product_id');
+    }
+
 
 }

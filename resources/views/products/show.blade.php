@@ -65,6 +65,36 @@
             </form>
         </div>
     </div>
+
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h3>Comments</h3>
+            @if($product->comments->count() > 0)
+                <ul class="list-group">
+                    @foreach($product->comments as $comment)
+                        <li class="list-group-item">
+                            <strong>{{ $comment->user->name }}:</strong> {{ $comment->comment }}
+                        </li>
+                    @endforeach
+                </ul>
+            @else
+                <p>No comments yet.</p>
+            @endif
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h3>Add Comment</h3>
+            <form action="{{ route('products.add.comment', $product->uniqid) }}" method="post">
+                @csrf
+                <div class="form-group">
+                    <textarea class="form-control" name="comment" rows="3" placeholder="Write your comment here"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Comment</button>
+            </form>
+        </div>
+    </div>
 </div>
 
 @include('layouts.footer')

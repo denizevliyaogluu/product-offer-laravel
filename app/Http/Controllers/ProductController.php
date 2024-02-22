@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductCategories;
+use App\Models\ProductComments;
 use App\Models\ProductImages;
 use App\Models\Products;
 use App\Models\User;
@@ -119,6 +120,22 @@ class ProductController extends Controller
         $image = ProductImages::findOrFail($id);
         $image->delete();
         return response()->json(['message' => 'Image deleted successfully'], 200);
+    }
+
+    public function addComment(Request $request, $uniqid)
+    {
+        $request->validate([
+            'comment' => 'required|string|max:255',
+        ]);
+
+        $product = Products::where('uniqid', $uniqid)->firstOrFail();
+        $comment = new ProductComments();
+        $comment->comment = $request->comment;
+        $comment->user_id = Auth::id();
+        $comment->product_id = $product->id;
+        $comment->save();
+
+        return redirect()->back()->with('success', 'Comment added successfully.');
     }
 
 }

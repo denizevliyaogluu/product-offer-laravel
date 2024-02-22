@@ -66,6 +66,6 @@ Route::middleware(['role:company'])->group(function () {
         Route::get('/', [ProductManagementController::class, 'index'])
             ->name('productmanagement.index');
         Route::get('/product/{productId}/order-details', [ProductManagementController::class, 'showOrderDetails'])->name('product.order.details');
-
     });
 });
+Route::post('products/add-comment/{uniqid}', [ProductController::class, 'addComment'])->name('products.add.comment');
