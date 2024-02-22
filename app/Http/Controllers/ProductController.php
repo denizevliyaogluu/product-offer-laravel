@@ -24,20 +24,22 @@ class ProductController extends Controller
     }
 
     public function show($uniqid)
-{
-    $product = Products::where('uniqid', $uniqid)->firstOrFail();
-    $images = ProductImages::where('product_id', $product->id)->get();
-    return view('products.show', compact('product', 'images'));
-}
+    {
+        $product = Products::where('uniqid', $uniqid)->firstOrFail();
+        $images = ProductImages::where('product_id', $product->id)->get();
+        return view('products.show', compact('product', 'images'));
+    }
 
 
 
-    public function create(){
+    public function create()
+    {
         $categories = ProductCategories::all();
         return view('products.create', compact('categories'));
     }
 
-    public function createPost(Request $request){
+    public function createPost(Request $request)
+    {
         $request->validate([
             'name' => 'required',
             'description' => 'required',
@@ -73,13 +75,15 @@ class ProductController extends Controller
 
 
 
-    public function update($uniqid){
+    public function update($uniqid)
+    {
         $product = Products::where('uniqid', $uniqid)->firstOrFail();
         $categories = ProductCategories::all();
         return view('products.update', compact('product', 'categories'));
     }
 
-    public function updatePost(Request $request, $uniqid){
+    public function updatePost(Request $request, $uniqid)
+    {
         $request->validate([
             'name' => 'required',
             'description' => 'required',
@@ -93,7 +97,7 @@ class ProductController extends Controller
         $product->price = $request->price;
         $product->category_id = $request->category_id;
         if ($request->hasFile('image')) {
-            $imageName = time().'.'.$request->image->extension();
+            $imageName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('images'), $imageName);
             $product->image = $imageName;
         }
@@ -108,6 +112,13 @@ class ProductController extends Controller
         $product->delete();
 
         return redirect()->route('productmanagement.index')->with('success', 'The product has been deleted successfully.');
+    }
+
+    public function deleteImage(Request $request, $id)
+    {
+        $image = ProductImages::findOrFail($id);
+        $image->delete();
+        return response()->json(['message' => 'Image deleted successfully'], 200);
     }
 
 }

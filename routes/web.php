@@ -60,6 +60,7 @@ Route::middleware(['role:company'])->group(function () {
         Route::get('/update/{uniqid}', [ProductController::class, 'update'])->name('products.update');
         Route::post('/update/{uniqid}', [ProductController::class, 'updatePost'])->name('products.update.post');
         Route::get('/delete/{uniqid}', [ProductController::class, 'delete'])->name('products.delete');
+        Route::delete('/delete-image/{id}', [ProductController::class, 'deleteImage'])->name('delete.image');
     });
     Route::prefix('productmanagement')->group(function () {
         Route::get('/', [ProductManagementController::class, 'index'])

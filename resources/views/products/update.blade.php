@@ -48,9 +48,16 @@
                     @endforeach
                 </select>
             </div>
+            @foreach ($product->images as $image)
+                <div class="form-group">
+                    <img src="{{ asset('images/' . $image->image) }}" alt="Product Image" style="max-width: 100px;">
+                    <a href="#" class="btn btn-sm btn-danger"
+                        onclick="deleteImage(event, {{ $image->id }})">X</a>
+                </div>
+            @endforeach
+
             <div class="form-group">
-                <label for="image">Image:</label>
-                <input type="file" class="form-control-file" id="image" name="image">
+                <input type="file" class="form-control-file" id="images" name="images[]" multiple>
             </div>
             <button type="submit" class="btn btn-primary">Update</button>
         </form>
@@ -63,6 +70,30 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function deleteImage(event, id) {
+            event.preventDefault();
+            if (confirm('Are you sure you want to delete this image?')) {
+                fetch(`/products/delete-image/${id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            event.target.parentNode.remove();
+                        } else {
+                            console.error('Error:', response.statusText);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+        }
+    </script>
+
 
 </body>
 
