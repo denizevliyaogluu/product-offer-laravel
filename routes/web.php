@@ -55,6 +55,7 @@ Route::middleware(['role:user'])->group(function () {
 
     Route::post('/favorites/add', [FavoritesController::class, 'addToFavorites'])->name('favorites.add');
     Route::post('/favorites/remove', [FavoritesController::class, 'removeFromFavorites'])->name('favorites.remove');
+    Route::get('/favorites', [FavoritesController::class, 'index'])->name('wishlist.index');
 
 });
 Route::middleware(['role:company'])->group(function () {

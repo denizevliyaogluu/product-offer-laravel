@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class FavoritesController extends Controller
 {
+    public function index()
+    {
+        $favorites = auth()->user()->favorites()->with('product')->get();
+        return view('wishlist.index', compact('favorites'));
+    }
     public function addToFavorites(Request $request)
 {
     $favorite = Favorites::where('user_id', auth()->user()->id)
