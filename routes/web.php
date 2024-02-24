@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\HomepageController;
@@ -51,6 +52,10 @@ Route::middleware(['role:user'])->group(function () {
         Route::post('/create', [OrderController::class, 'create'])->name('orders.create');
         Route::get('/confirm-cart', [OrderController::class, 'confirmCart'])->name('orders.confirmCart');
     });
+
+    Route::post('/favorites/add', [FavoritesController::class, 'addToFavorites'])->name('favorites.add');
+    Route::post('/favorites/remove', [FavoritesController::class, 'removeFromFavorites'])->name('favorites.remove');
+
 });
 Route::middleware(['role:company'])->group(function () {
     Route::prefix('products')->group(function () {

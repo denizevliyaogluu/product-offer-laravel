@@ -13,7 +13,8 @@
                             <li class="mr-3"><a href="{{ route('products.index') }}" class="text-light">Products</a>
                             </li>
                             <li class="mr-3"><a href="{{ route('orders.index') }}" class="text-light">Cart</a></li>
-                        @endif
+                            <li class="mr-3"><a href="{{ route('orders.index') }}" class="text-light">Wishlist</a></li>
+                            @endif
                     @endif
                 </ul>
             </nav>
