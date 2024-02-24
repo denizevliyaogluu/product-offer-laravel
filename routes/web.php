@@ -52,7 +52,6 @@ Route::middleware(['role:user'])->group(function () {
         Route::get('/confirm-cart', [OrderController::class, 'confirmCart'])->name('orders.confirmCart');
     });
 });
-
 Route::middleware(['role:company'])->group(function () {
     Route::prefix('products')->group(function () {
         Route::get('/create', [ProductController::class, 'create'])->name('products.create');

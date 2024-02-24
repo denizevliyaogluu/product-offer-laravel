@@ -127,7 +127,6 @@ class ProductController extends Controller
         $request->validate([
             'comment' => 'required|string|max:255',
         ]);
-
         $product = Products::where('uniqid', $uniqid)->firstOrFail();
         $comment = new ProductComments();
         $comment->comment = $request->comment;
