@@ -41,35 +41,37 @@ class AuthController extends Controller
     {
         $validate = $request->validate([
             'name' => 'required',
+            'surname' => 'required',
+            'phone' => 'required',
             'email' => 'required|unique:users,email',
-            'addres' => 'required',
+            'address' => 'required',
             'password' => 'required',
             'confirm-password' => 'required|same:password',
-            'role' => 'required|in:user,company',
         ]);
+        $product = new User();
+        $product->name = $request->name;
+        $product->surname = $request->surname;
+        $product->email = $request->email;
+        $product->phone = $request->phone;
+        $product->address = $request->address;
+        $product->password = Hash::make($request->password);
+        $product->role = 'user';
+        $product->save();
 
-        $userData = $request->except('confirm-password', 'password', 'role');
-        $userData['password'] = Hash::make($request->password);
 
-        $user = User::create($userData);
+        // if ($request->role == 'company') {
+        //     $companyData = [
+        //         'user_id' => $user->id,
+        //         'company_name' => $request->company_name,
+        //         'address' => $request->address,
+        //         'phone_number' => $request->phone_number,
+        //     ];
 
-        $user->update(['role' => $request->role]);
-
-        if ($request->role == 'company') {
-            $companyData = [
-                'user_id' => $user->id,
-                'company_name' => $request->company_name,
-                'address' => $request->address,
-                'phone_number' => $request->phone_number,
-            ];
-
-            Company::create($companyData);
-        }
+        //     Company::create($companyData);
+        // }
 
         return redirect('/login');
     }
-
-
 
     public function logout(Request $request)
     {

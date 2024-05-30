@@ -66,13 +66,13 @@
                                 </button>
                             @endif
                         </div>
-                        <div class="card-footer">
+                        {{-- <div class="card-footer">
                             <form action="{{ route('orders.create') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                                 <button type="submit" class="btn btn-sm btn-dark">Add to Cart</button>
                             </form>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             @endforeach

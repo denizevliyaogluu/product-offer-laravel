@@ -28,7 +28,7 @@
                     <th scope="col">Price</th>
                     <th scope="col">Description</th>
                     <th scope="col">Operations</th>
-                    <th scope="col">Details</th>
+                    <th scope="col">Offers</th>
                 </tr>
             </thead>
             <tbody>
@@ -50,9 +50,13 @@
                                     onclick="return confirm('Bu ürünü silmek istediğinizden emin misiniz?')">Delete</button>
                             </form>
                         </td>
-                        <td>
+                        {{-- <td>
                             <a href="{{ route('product.order.details', $product->id) }}"
                                 class="btn btn-primary btn-sm">Orders</a>
+                        </td> --}}
+                        <td>
+                            <a href="{{ route('product.offers.details', $product->id) }}"
+                                class="btn btn-primary btn-sm">Offers</a>
                         </td>
                     </tr>
                 @endforeach

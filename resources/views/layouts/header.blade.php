@@ -1,7 +1,7 @@
 <header class="bg-dark text-light py-3">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center">
-            <h1>E-Commerce</h1>
+            {{-- <h1>Offer System</h1> --}}
             <nav>
                 <ul class="list-unstyled mb-0 d-flex">
                     @if (Auth::check())
@@ -12,8 +12,9 @@
                             <li class="mr-3"><a href="{{ route('homepage') }}" class="text-light">Home Page</a></li>
                             <li class="mr-3"><a href="{{ route('products.index') }}" class="text-light">Products</a>
                             </li>
-                            <li class="mr-3"><a href="{{ route('orders.index') }}" class="text-light">Cart</a></li>
-                            <li class="mr-3"><a href="{{ route('wishlist.index') }}" class="text-light">Wishlist</a></li>
+                            {{-- <li class="mr-3"><a href="{{ route('orders.index') }}" class="text-light">Cart</a></li> --}}
+                            <li class="mr-3"><a href="{{ route('wishlist.index') }}" class="text-light">Favorites</a></li>
+                            <li class="mr-3"><a href="{{ route('offers.index') }}" class="text-light">Offers</a></li>
                             @endif
                     @endif
                 </ul>

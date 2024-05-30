@@ -61,8 +61,11 @@
             <form action="{{ route('orders.create') }}" method="POST">
                 @csrf
                 <input type="hidden" name="product_id" value="{{ $product->id }}">
-                <button type="submit" class="btn btn-lg btn-dark">Add to Cart</button>
+                {{-- <button type="submit" class="btn btn-lg btn-dark">Add to Cart</button> --}}
             </form>
+            <button type="button" class="btn btn-secondary mt-3" data-toggle="modal" data-target="#offerModal">
+                Give Offer
+            </button>
         </div>
     </div>
 
@@ -91,7 +94,35 @@
                 <div class="form-group">
                     <textarea class="form-control" name="comment" rows="3" placeholder="Write your comment here"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Add Comment</button>
+                <button type="submit" class="btn btn-dark">Add Comment</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Teklif Ver Modal -->
+<div class="modal fade" id="offerModal" tabindex="-1" role="dialog" aria-labelledby="offerModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="{{ route('offers.store') }}" method="POST">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="offerModalLabel">Give Offer</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="price">Price</label>
+                        <input type="number" class="form-control" name="price" id="price" required>
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-dark">Give Offer</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </form>
         </div>
     </div>

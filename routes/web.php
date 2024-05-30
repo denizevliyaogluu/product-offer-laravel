@@ -4,6 +4,7 @@ use App\Http\Controllers\FavoritesController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\OfferController;
 use App\Http\Controllers\ProductManagementController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -57,6 +58,8 @@ Route::middleware(['role:user'])->group(function () {
     Route::post('/favorites/remove', [FavoritesController::class, 'removeFromFavorites'])->name('favorites.remove');
     Route::get('/favorites', [FavoritesController::class, 'index'])->name('wishlist.index');
 
+    Route::get('/offers', [OfferController::class, 'index'])->name('offers.index');
+
 });
 Route::middleware(['role:company'])->group(function () {
     Route::prefix('products')->group(function () {
@@ -71,6 +74,9 @@ Route::middleware(['role:company'])->group(function () {
         Route::get('/', [ProductManagementController::class, 'index'])
             ->name('productmanagement.index');
         Route::get('/product/{productId}/order-details', [ProductManagementController::class, 'showOrderDetails'])->name('product.order.details');
+        Route::get('/product/{productId}/offer-details', [ProductManagementController::class, 'showOfferDetails'])->name('product.offers.details');
     });
 });
 Route::post('products/add-comment/{uniqid}', [ProductController::class, 'addComment'])->name('products.add.comment');
+
+Route::post('/offers/store', [OfferController::class, 'store'])->name('offers.store');

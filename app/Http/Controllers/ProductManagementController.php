@@ -37,4 +37,12 @@ class ProductManagementController extends Controller
         return view('productmanagement.show_order_details', compact('product', 'orders'));
     }
 
+    public function showOfferDetails($productId)
+{
+    $product = Products::findOrFail($productId);
+    $offers = $product->offers; // Ürüne ait teklifleri al
+
+    return view('productmanagement.show_offers_details', compact('product', 'offers'));
+}
+
 }

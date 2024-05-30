@@ -43,14 +43,14 @@
                                     @if (auth()->check() &&
                                             auth()->user()->favorites &&
                                             auth()->user()->favorites->contains('product_id', $product->id))
-                                        <button class="btn btn-danger toggleFavoriteBtn"
+                                        <button class="btn btn-dark toggleFavoriteBtn"
                                             data-product-id="{{ $product->id }}" data-action="remove">
-                                            <i class="fas fa-heart"></i>
+                                            <i class="fas fa-star"></i>
                                         </button>
                                     @else
-                                        <button class="btn btn-danger toggleFavoriteBtn"
+                                        <button class="btn btn-dark toggleFavoriteBtn"
                                             data-product-id="{{ $product->id }}" data-action="add">
-                                            <i class="fas fa-heart"></i>
+                                            <i class="fas fa-star"></i>
                                         </button>
                                     @endif
                                 </div>
