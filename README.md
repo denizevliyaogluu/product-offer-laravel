@@ -1,3 +1,27 @@
+## Introduction
+
+This project is a product offer system designed to facilitate user authentication, product management, offer submission, and wishlist creation.
+
+## Features
+
+**User Authentication**
+- Login/Register/Logout: Users can perform authentication operations.
+
+**Product Management**
+- CRUD Operations on Products: Users can create, delete, edit, and list products in specific categories.
+- Product Detail Pages: Users can view detailed information about each product.
+
+**Offer Submission**
+- Users can submit offers for products they are interested in.
+- Offer Detail Pages: Users can view detailed information about each offer, including the user who submitted the offer and their details.
+
+**Favorite Management**
+- Add/Remove from Favorites: Users can add or remove products from their favorites list.
+
+**Wishlist Creation**
+- Users can create wishlists to organize and save their favorite products.
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
